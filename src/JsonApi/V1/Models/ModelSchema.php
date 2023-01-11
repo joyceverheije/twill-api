@@ -127,6 +127,7 @@ abstract class ModelSchema extends Schema
             $fields[] = BelongsToMany::make('related-items')->serializeUsing(
                 static fn($relation) => $relation->withMeta(function ($value) {
                     if ($value->relationLoaded('relatedItems')) {
+                        $source = collect([]);
                         if (get_class($value) === Block::class) {
                             $source = collect($value->content['browsers'] ?? [])->map(
                                 static fn($browser) => collect($browser)->map(
